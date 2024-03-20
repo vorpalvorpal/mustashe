@@ -56,7 +56,8 @@ stash <- function(var,
                   code,
                   depends_on = NULL,
                   functional = NULL,
-                  verbose = NULL) {
+                  verbose = NULL,
+                  envir = parent.frame()) {
   if (is.null(functional)) functional <- mustashe_functional()
   if (is.null(verbose)) verbose <- mustashe_verbose()
   check_stash_dir()
@@ -68,7 +69,7 @@ stash <- function(var,
   if (formatted_code == "NULL") stop("`code` cannot be NULL")
 
   # The environment where all code is evaluated and variables assigned.
-  target_env <- parent.frame()
+  target_env <- envir
   new_hash_tbl <- make_hash_table(formatted_code, depends_on, target_env)
 
   # if the variable has been stashed:
